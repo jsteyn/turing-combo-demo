@@ -1,0 +1,6 @@
+xgboost==1.0.1
+matplotlib==3.3.4
+tqdm==4.62.0
+numpy==1.19.5
+sklearn
+GPyOpt==1.2.5
