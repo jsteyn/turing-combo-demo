@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ## SET UP ENVIRONMENT
 LABEL maintainer="jannetta.steyn@newcastle.ac.uk"
@@ -10,9 +10,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y apt-utils
+
+# RUN apt-get install -y cmake git python3 python3-pip python3-dev wget  apt-transport-https software-properties-common zip unzip libpaper-utils xdg-utils liblas3 libcairo2 libcurl4 libjpeg8 liblapack3 libpango-1.0-0 libpangocairo-1.0-0 libpng16-16 libtiff5 libtk8.6 libxt6 gfortran libblas-dev libatlas-base-dev liblapack-dev libatlas-base-dev libncurses5-dev libreadline-dev libjpeg-dev libpcre3-dev libpng-dev zlib1g-dev libbz2-dev liblzma-dev libicu-dev pkg-config 
+RUN apt-get install -y cmake git python3 python3-pip python3-dev wget  apt-transport-https software-properties-common zip unzip libpaper-utils xdg-utils libcairo2 libcurl4 libjpeg8 liblapack3 libpango-1.0-0 libpangocairo-1.0-0 libpng16-16 libtiff5 libtk8.6 libxt6 gfortran libblas-dev libatlas-base-dev liblapack-dev libatlas-base-dev libncurses5-dev libreadline-dev libjpeg-dev libpcre3-dev libpng-dev zlib1g-dev libbz2-dev liblzma-dev libicu-dev pkg-config 
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y cmake git python3 python3-pip python3-dev wget  apt-transport-https software-properties-common zip unzip libpaper-utils xdg-utils liblas3 libcairo2 libcurl4 libjpeg8 liblapack3 libpango-1.0-0 libpangocairo-1.0-0 libpng16-16 libtiff5 libtk8.6 libxt6 gfortran libblas-dev libatlas-base-dev liblapack-dev libatlas-base-dev libncurses5-dev libreadline-dev libjpeg-dev libpcre3-dev libpng-dev zlib1g-dev libbz2-dev liblzma-dev libicu-dev pkg-config 
 ENV PATH $PATH:/usr/local/conda/bin
 
 ## DOWNLOAD AND INSTALL REQUIRED LINUX PACKAGES FOR MLFOW
@@ -41,8 +43,11 @@ RUN jupyter nbextension enable --py --sys-prefix widgetsnbextension
 COPY jupyter_notebook_config.py /root/.jupyter/.
 
 ## INSTALL ALL THINGS R
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+# RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
+RUN apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN apt-key adv --keyserver hkp://subkeys.pgp.net --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
 RUN apt-get update
 RUN apt-get install -y r-base r-base-dev
 
@@ -58,9 +63,9 @@ COPY kaggle_breastcancer.csv /autoprognosis/kaggle_breastcancer.csv
 RUN ls -la /
 
 ## COPY ALL AutoPrognosis files
-RUN git clone https://github.com/ahmedmalaa/AutoPrognosis.git
-RUN cd AutoPrognosis; git checkout b3e2bec0763d29de97715a95f0bc7e17a1e9a1dd
-RUN mv /AutoPrognosis/alg/autoprognosis /autoprognosis/.
+RUN git clone https://github.com/vanderschaarlab/mlforhealthlabpub.git
+RUN cd /mlforhealthlabpub
+RUN mv /mlforhealthlabpub/alg/autoprognosis /autoprognosis/.
 COPY init/ /init/
 COPY util/ /util/
 COPY requirements.txt /autoprognosis/.
