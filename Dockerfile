@@ -45,8 +45,8 @@ COPY jupyter_notebook_config.py /root/.jupyter/.
 ## INSTALL ALL THINGS R
 # RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/'
 RUN apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
-# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
-RUN apt-key adv --keyserver hkp://subkeys.pgp.net --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+# RUN apt-key adv --keyserver hkp://subkeys.pgp.net --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 RUN add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
 RUN apt-get update
 RUN apt-get install -y r-base r-base-dev
@@ -66,8 +66,8 @@ RUN ls -la /
 RUN git clone https://github.com/vanderschaarlab/mlforhealthlabpub.git
 RUN cd /mlforhealthlabpub
 RUN mv /mlforhealthlabpub/alg/autoprognosis /autoprognosis/.
-COPY init/ /init/
-COPY util/ /util/
+RUN mv /mlforhealthlabpub/init/ /init/
+RUN mv /mlforhealthlabpub/util/ /util/
 COPY requirements.txt /autoprognosis/.
 COPY install_packages.r /autoprognosis/.
 RUN cd /autoprognosis
