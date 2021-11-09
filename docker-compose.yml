@@ -1,0 +1,31 @@
+version: "3.6"
+
+services:
+  autoprognosis:
+    container_name: autoprognosis
+    image: jannetta/autoprognosis:0.0.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - /home/jannetta/DOCKERVOLUMES/MLFlow/autoprognosis:/autoprognosis
+    networks:
+      - lmdemo
+  MLFlow:
+    container_name: mlflow
+    image: jannetta/mlflow:0.0.1
+    ports:
+      - "5000:5000"
+      # - "1230-1240:1230-1240"
+    volumes:
+      - /home/jannetta/DOCKERVOLUMES/MLFlow/models:/models
+    networks:
+      - lmdemo
+
+volumes:
+  mlflow: 
+    # external: true
+  autoprognosis: 
+    # external: true
+
+networks:
+  lmdemo:
