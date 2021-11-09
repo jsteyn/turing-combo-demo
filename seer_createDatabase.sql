@@ -1,2 +1,0 @@
-DROP DATABASE seer;
-CREATE DATABASE seer;
