@@ -15,7 +15,8 @@ services:
     image: jannetta/mlflow:0.0.1
     ports:
       - "5000:5000"
-      # - "1230-1240:1230-1240"
+      - "1230-1240:1230-1240"
+      - "8082:8080"
     volumes:
       - /home/jannetta/DOCKERVOLUMES/MLFlow/models:/models
     networks:
